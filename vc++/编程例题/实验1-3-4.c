@@ -1,0 +1,52 @@
+#include<stdio.h>
+int main()
+{
+	int i,j,m=1,l,n,t,num[20][20];
+	printf("please input the n:");
+	scanf("%d",&n);
+	for(t=0;t<n;t++)
+	{
+	if(t%2!=0)
+		{
+			for(i=0;i<=t;i++)
+		    {
+			num[i][t-i]=m;
+			m++;
+		    }
+		}	
+		    else
+	        {
+	        for(i=0;i<=t;i++)
+		    {
+	         num[t-i][i]=m;
+			 m++;
+	        }
+		    }
+    }
+    for(l=n;l<2*n-1;l++)
+		{
+			if(l%2==0)
+		{
+			for(i=n-1;l-i<n;i--)
+			{	 
+				num[i][l-i]=m;
+				m++;
+			} 
+		}
+		    else
+	        {
+	        for(i=n-1;l-i<n;i--)
+	         {
+			 num[l-i][i]=m;
+			 m++;
+		     }
+	        }
+			}
+		for(i=0;i<n;i++)
+		{
+			for(j=0;j<n;j++)
+		    printf("%4d",num[i][j]);
+		    printf("\n");
+		}
+return 0;
+ } 
