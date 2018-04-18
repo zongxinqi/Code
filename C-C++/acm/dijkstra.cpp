@@ -24,7 +24,7 @@ void Dij()
 					v = w;
 				}
 			}
-		}
+		};
 		final[v] = 1;
 		for(w = 0;w < n;w++)
 		{
