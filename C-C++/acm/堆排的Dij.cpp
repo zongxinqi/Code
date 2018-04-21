@@ -1,13 +1,13 @@
 #include<bits/stdc++.h>
 using namespace std;
-const int maxn = 500;
-int pa[maxn];
+const int maxn = 1010;
 int vis[maxn];
 int plen[maxn];
+int path[maxn];
 vector<pair<int,int> >G[maxn];
-void Dij(int s,int d,int n){
+void Dij(int n,int s,int d){
 	for(int i = 0;i < n;i++){
-		pa[i] = -1;vis[i] = 0;plen[i] = 0x3f3f3f3f;
+		vis[i] = 0;path[i] = -1;plen[i] = 0x3f3f3f3f;
 	}
 	plen[s] = 0;
 	priority_queue<pair<int,int> >q;
@@ -16,35 +16,36 @@ void Dij(int s,int d,int n){
 		int u = q.top().second;
 		q.pop();
 		if(vis[u]) continue;
-		vis[u] =  1;
+		vis[u] = 1;
 		for(int i = 0;i < (int)G[u].size();i++){
-			int v = G[u][i].first,w = G[u][i].second;
-			if(plen[u] + w < plen[v]){
+			int v = G[u][i].first, w = G[u][i].second;
+			if(plen[v] > plen[u] + w){
 				plen[v] = plen[u] + w;
-				pa[v] = u;
+				path[v] = u;
 				q.push({-plen[v],v});
 			}
 		}
 	}
 	cout<<plen[d]<<endl;
-	vector<int> path; path.push_back(d);
+	vector<int> path_array;path_array.push_back(d);
 	while(1){
-		d = pa[d];
-		if(d == - 1) break;
-		path.push_back(d);
+		d = path[d];
+		if(d == -1) break;
+		path_array.push_back(d);
 	}
-	for(int i = path.size()- 1;i >= 0;i--) cout<<path[i]<<(i == 0?"":"->");
+	for(int i = path_array.size()-1;i >= 0;i--)
+	cout<<path_array[i]<<(i == 0?"":" ");
 }
 int main()
 {
-	ios::sync_with_stdio();
-	cin.tie();
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
 	int n,m,s,d;cin>>n>>m>>s>>d;
 	for(int i = 0;i < m;i++){
 		int a,b,c;cin>>a>>b>>c;
 		G[a].push_back({b,c});
 		G[b].push_back({a,c});
 	}
-	Dij(s,d,n);
+	Dij(n,s,d);
 	return 0;
 }

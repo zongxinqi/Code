@@ -1,54 +1,58 @@
-#include<bits/stdc++.h>
-#define MaxInt 100
-#define MaxEle 120
+#include<iostream>
+#include<cstdio>
+#include<cstring>
+
 using namespace std;
-int map[MaxEle][MaxEle];
-int visited[MaxEle];
-int distance_low[MaxEle];
-int prim(int n) {
-  int pos, min, MST = 0;
-  visited[1] = 1;
-  pos = 1;
-  for (int i = 2; i <= n; i++) {
-    if (map[pos][i] == 0) {
-      distance_low[i] = MaxInt;
-    } else {
-      distance_low[i] = map[pos][i];
+
+const int N=110;
+const int INF=0x3f3f3f3f;
+
+int n,ans;
+int map[N][N],dis[N],vis[N];
+
+void Prim(){
+    int i;
+    for(i=1;i<=n;i++){
+        dis[i]=map[1][i];
+        vis[i]=0;
     }
-  }
-  for (int i = 1; i <= n - 1; i++) {
-    min = MaxInt;
-    for (int j = 1; j <= n; j++) {
-      if (visited[j] == 0 && min > distance_low[j]) {
-        min = distance_low[j];
-        pos = j;
-      }
+    dis[1]=0;
+    vis[1]=1;
+    int j,k,tmp;
+    for(i=1;i<=n;i++){
+        tmp=INF;
+        for(j=1;j<=n;j++)
+            if(!vis[j] && tmp>dis[j]){
+                k=j;
+                tmp=dis[j];
+            }
+        if(tmp==INF)
+            break;
+        vis[k]=1;
+        ans+=dis[k];
+        for(j=1;j<=n;j++)
+            if(!vis[j] && dis[j]>map[k][j])
+                dis[j]=map[k][j];
     }
-    visited[pos] = 1;
-    MST += min;
-    for (int j = 1; j <= n; j++) {
-      if (visited[j] == 0 && distance_low[j] > map[pos][j]) {
-        if (map[pos][j] != 0) {
-          distance_low[j] = map[pos][j];
-        }
-      }
-    }
-  }
-  return MST;
 }
-int main() {
-  int n;
-  while (scanf("%d", &n) != EOF) {
-    memset(map, MaxInt, sizeof(map));
-    for (int i = 1; i != n + 1; i++) {
-      for (int j = 1; j != n + 1; j++) {
-        int ele;
-        cin >> ele;
-        map[i][j] = map[j][i] = ele;
-      }
+
+int main(){
+
+    //freopen("input.txt","r",stdin);
+
+    while(~scanf("%d",&n)){
+        for(int i=1;i<=n;i++)
+            for(int j=1;j<=n;j++)
+                scanf("%d",&map[i][j]);
+        int q,a,b;
+        scanf("%d",&q);
+        while(q--){
+            scanf("%d%d",&a,&b);
+            map[a][b]=map[b][a]=0;
+        }
+        ans=0;
+        Prim();
+        printf("%d\n",ans);
     }
-    int ans = prim(n);
-    cout << ans << endl;
-  }
-  return 0;
+    return 0;
 }
