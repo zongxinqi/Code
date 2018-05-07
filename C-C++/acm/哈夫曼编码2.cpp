@@ -1,8 +1,5 @@
 #include<bits/stdc++.h>
 using namespace std;
-int cal(char x){
-	return x - 'a' + 1;
-}
 typedef struct Tree{
 	int freq;
 	char key;
@@ -20,7 +17,7 @@ void print_code(Tree *proot,string ans){
 	if(proot->left)  ans += '0';
 	print_code(proot->left,ans);
 	if(!proot->left&&!proot->right){
-		cout<<proot->key<<ans<<endl;
+		cout<<proot->key<<": "<<ans<<endl;
 	}
 	ans.pop_back();
 	if(proot->right) ans += '1';
@@ -33,18 +30,17 @@ void del(Tree *proot){
 	delete proot;
 }
 void huffman(){
-	string s;cin>>s;
+	int n;cin>>n;
+	char s[1010];
+	int fe; 
 	priority_queue<pTree,vector<pTree>,cmp> pque;	
-		int a[30] = {0};
-		for(int i = 0;i < s.length();i++)a[cal(s[i])]++;
-		for(int i = 0;i < 26;i++){
-			if(a[i]){
+		for(int i = 0;i < n;i++){
+				cin>>s[i]>>fe;
 				Tree *pt = new Tree;
-				pt->freq = a[i];
-				pt->key = i - 1 + 'a';
+				pt->freq = fe;
+				pt->key = s[i];
 				pque.push(pt);
 			}
-		}
 		while(pque.size() > 1){
 			Tree *proot = new Tree;
 			pTree pl,pr;
@@ -64,9 +60,6 @@ void huffman(){
 }	
 int main()
 {
-	int n;
-	while(cin>>n){
-		for(int i = 0;i < n;i++) huffman();
-	}
+	huffman();
 	return 0;
 }

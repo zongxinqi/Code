@@ -14,6 +14,7 @@ int main()
 			for(int j = n;j >= v[i];j--){
 				if(dp[j] < dp[j - v[i]] + v[i])
 					vis[i][j] = 1;
+					dp[j] = dp[j - v[i]]+v[i];
 			}
 		}
 		vector<int> path;

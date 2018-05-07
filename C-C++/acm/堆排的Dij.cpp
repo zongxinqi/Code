@@ -37,7 +37,7 @@ void Dij(int n,int s,int d){
 	cout<<path_array[i]<<(i == 0?"":" ");
 }
 int main()
-{
+{		
 	ios_base::sync_with_stdio(0);
 	cin.tie(0);
 	int n,m,s,d;cin>>n>>m>>s>>d;

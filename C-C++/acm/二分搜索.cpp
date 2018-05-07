@@ -18,6 +18,7 @@ int main()
 	int n,t;
 	while(cin>>n>>t){
 	for(int i = 0;i < n;i++) cin>>num[i];
+	sort(num,num+n);
 	int ans;
 	ans = find(num,0,n-1,t);
 	cout<<ans<<endl;

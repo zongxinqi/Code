@@ -1,9 +1,4 @@
-#include<iostream>  
-#include<cstdlib>  
-#include<cstdio>  
-#include<algorithm>  
-#include<cstring>  
-#include<map>  
+#include<bits/stdc++.h> 
 #define INF 0x3f3f3f3f  
 #define N 1000  
 using namespace std;  
