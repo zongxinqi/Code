@@ -1,49 +1,31 @@
-/** 
- * 最长公共子序列 
- * 优化了内存空间的使用 
- * 观察到一件事: 每一个元素的计算,只和其在左上, 左边, 上边的三个元素相关 
- * 可以考虑len(x) + 3 
- * 3个变量 定义为leftAbove, left, above 
- */  
-#include<iostream>  
-#include<string>  
-#include<memory.h>  
-using namespace std;  
-  
-  
-int LCS(string x, string y);  
-   
-int main() {  
-    string x, y;  
-    cin>>x>>y;  
-    LCS(x, y);  
-}  
-  
-int LCS(string x, string y){  
-    int lenx = x.length();  
-    int leny = y.length();  
-      
-    int leftabove, left, above; //左上角 左 上  
-  
-    int *compute = new int[leny + 1]; //compute[0] 即原来的calc[i][0] for i in [0, lenx];  
-    memset(compute, 0, (leny + 1) * sizeof(int));  
-    for(int i = 1; i <= lenx; i++) {  
-        leftabove = left = compute[0];  
-        above = compute[1];  
-        for(int t = 0; t <= leny; t++) cout<<compute[t]<<" ";  
-        cout<<endl;  
-        for(int j = 1; j <= leny; j++) {   
-            //计算,并且更新这三个变量  
-            if(x[i - 1] == y[j - 1]) compute[j] = leftabove + 1;  
-            else if(left > above)    compute[j] = left;  
-            else compute[j] = above;  
-  
-            //更新此三个变量,很有技巧的哦  
-            leftabove = above;  
-            above = compute[j + 1];  
-            left = compute[j];  
-        }  
-    }  
-    cout<<compute[leny]<<endl;   
-    delete[] compute;  
-}  
+#include<bits/stdc++.h>
+using namespace std;
+const int maxn = 1010;
+int dp[maxn][maxn];
+int vis[maxn][maxn];
+string a,b;
+void print(int m,int n){
+	if(!m&&!n) return ;
+	else{
+		if(vis[m][n] == 1){
+			print(m-1,n-1);
+			cout<<a[m-1];
+		}
+		else if(vis[m][n] == 2) print(m-1,n);
+		else print(m,n-1);
+	}
+}
+int main(){
+	cin>>a>>b;
+	for(int i = 0;i <= a.length();i++) dp[0][i] = 0;
+	for(int i = 0;i <= b.length();i++) dp[i][0] = 0;
+	for(int i = 1;i <= a.length();i++)
+		for(int j = 1;j <= b.length();j++){
+			if(a[i-1] == b[j-1]) dp[i][j] = dp[i-1][j-1] + 1,vis[i][j] = 1;
+			else if(dp[i-1][j] > dp[i][j-1]) dp[i][j] = dp[i-1][j],vis[i][j] = 2;
+			else dp[i][j] = dp[i][j-1],vis[i][j] = 3;
+		}
+	cout<<dp[a.length()][b.length()]<<endl;
+	print(a.length(),b.length());
+	return 0;
+} 

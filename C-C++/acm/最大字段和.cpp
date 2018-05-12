@@ -8,7 +8,7 @@ int main()
 	for(int j = 1;j <= t;j++){
 		int n;cin>>n;
 		for(int i = 0;i < n;i++)cin>>dp[i];
-		int ma = dp[0];
+		int ma = -maxn;
 		int be = 0,end = 0;
 		int aux = 0;
 		for(int i = 1;i < n;i++){
@@ -20,7 +20,8 @@ int main()
 				end = i;
 			}
 		}
-		cout<<"Case "<<j<<":"<<(j == t)?"":"\n";
-		cout<<ma<<be+1<<end+1<<endl;
+		cout<<"Case "<<j<<":"<<endl;
+		cout<<ma<<" "<<be+1<<" "<<end+1;
+		if(j != t) cout<<endl;
 	}	
 } 
